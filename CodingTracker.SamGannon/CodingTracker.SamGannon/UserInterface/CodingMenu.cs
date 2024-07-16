@@ -1,11 +1,12 @@
 ﻿using CodingTracker.SamGannon.Models;
+using CodingTracker.SamGannon.Utility;
 using System;
 using System.Linq;
 
-namespace CodingTracker.SamGannon;
+namespace CodingTracker.SamGannon.UserInterface;
 
 internal class CodingMenu
-{ 
+{
     internal void ShowCodingMenu()
     {
         Console.Clear();

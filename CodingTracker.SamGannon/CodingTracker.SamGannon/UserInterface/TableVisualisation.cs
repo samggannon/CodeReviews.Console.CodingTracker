@@ -1,6 +1,6 @@
 ﻿using ConsoleTableExt;
 
-namespace CodingTracker.SamGannon;
+namespace CodingTracker.SamGannon.UserInterface;
 
 internal class TableVisualisation
 {

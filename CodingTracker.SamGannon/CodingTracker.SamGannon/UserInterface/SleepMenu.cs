@@ -1,11 +1,15 @@
 ﻿using CodingTracker.SamGannon.Models;
+using CodingTracker.SamGannon.Utility;
 using System;
 using System.Linq;
 
-namespace CodingTracker.SamGannon;
+namespace CodingTracker.SamGannon.UserInterface;
 
 internal class SleepMenu
 {
+    UserInputHelper helper = new();
+    Validation validator = new();
+
     internal void ShowSleepMenu()
     {
         Console.Clear();
@@ -60,15 +64,14 @@ internal class SleepMenu
 
     private void ProcessSleepAdd()
     {
-        Validation validation = new();
-        var startTime = validation.GetStartTime();
-        var endTime = validation.GetEndTime();
-        var duration = validation.CalculateDuration(startTime, endTime);
+        var startTime = helper.GetStartTime();
+        var endTime = helper.GetEndTime();
+        var duration = helper.CalculateDuration(startTime, endTime);
 
         Sleep sleep = new();
 
         sleep.Duration = duration;
-        sleep.SleepType = validation.CalculateSleepType(sleep.Duration);
+        sleep.SleepType = helper.CalculateSleepType(sleep.Duration);
 
         CodingController codingController = new();
         codingController.PostSleep(sleep);
@@ -82,8 +85,7 @@ internal class SleepMenu
 
         string commandInput = Console.ReadLine();
 
-        Validation validation = new();
-        var id = validation.ValidateIdInput(commandInput);
+        var id = validator.ValidateIdInput(commandInput);
 
         GetUserInput getUserInput = new();
         if (id == 0) getUserInput.MainMenu();
@@ -136,10 +138,10 @@ internal class SleepMenu
             switch (updateInput)
             {
                 case "u":
-                    var startTime = validation.GetStartTime();
-                    var endTime = validation.GetEndTime();
-                    sleep.Duration = validation.CalculateDuration(startTime, endTime);
-                    sleep.SleepType = validation.CalculateSleepType(sleep.Duration);
+                    var startTime = helper.GetStartTime();
+                    var endTime = helper.GetEndTime();
+                    sleep.Duration = helper.CalculateDuration(startTime, endTime);
+                    sleep.SleepType = helper.CalculateSleepType(sleep.Duration);
                     updating = false;
                     break;
                 case "0":

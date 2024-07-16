@@ -1,25 +1,9 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 
-namespace CodingTracker.SamGannon;
+namespace CodingTracker.SamGannon.Utility;
 
-public class Validation
+internal class UserInputHelper
 {
-    public string CalculateSleepType(string duration)
-    {
-        TimeSpan sleepDuration = TimeSpan.ParseExact(duration, "h\\:mm", CultureInfo.InvariantCulture);
-
-        if (sleepDuration.TotalHours > 4)
-        {
-            return "long";
-        }
-        else
-        {
-            return "Short";
-        }
-    }
-
     public string GetStartTime()
     {
         Console.WriteLine("Please enter the start time of your session in the following format: (HH:mm).");
@@ -40,27 +24,6 @@ public class Validation
         endTime = ValidateTimeFormat(endTime);
 
         return endTime;
-    }
-
-    private string ValidateTimeFormat(string time)
-    {
-        while (!IsValid24HourFormat(time))
-        {
-            Console.WriteLine("\n\nDuration invalid. Please insert the duration in 24-hour format HH:mm: (e.g., 17:45)\n\n");
-            time = Console.ReadLine();
-        }
-
-        return time;
-    }
-
-    private bool IsValid24HourFormat(string time)
-    {
-        bool isValid = TimeSpan.TryParseExact(time, "hh\\:mm", CultureInfo.InvariantCulture, out _);
-        if (!isValid)
-        {
-            return false;
-        }
-        return isValid;
     }
 
     public string GetDateInput()
@@ -101,15 +64,43 @@ public class Validation
         return $"{(int)duration.TotalHours:D2}:{duration.Minutes:D2}";
     }
 
-    internal int ValidateIdInput(string? commandInput)
+    private string ValidateTimeFormat(string time)
     {
-        while (!int.TryParse(commandInput, out _) || string.IsNullOrEmpty(commandInput) || Int32.Parse(commandInput) < 0)
+        Validation validator = new Validation();
+        bool isValidTime = validator.IsValid24HourFormat(time);
+
+        while (!isValidTime)
+        {
+            Console.WriteLine("\n\nDuration invalid. Please insert the duration in 24-hour format HH:mm: (e.g., 17:45)\n\n");
+            time = Console.ReadLine();
+        }
+
+        return time;
+    }
+
+    public string CalculateSleepType(string duration)
+    {
+        TimeSpan sleepDuration = TimeSpan.ParseExact(duration, "h\\:mm\\:ss", CultureInfo.InvariantCulture);
+
+        if (sleepDuration.TotalHours > 4)
+        {
+            return "Long";
+        }
+        else
+        {
+            return "Short";
+        }
+    }
+
+    public int ValidateIdInput(string? commandInput)
+    {
+        while (!int.TryParse(commandInput, out _) || string.IsNullOrEmpty(commandInput) || int.Parse(commandInput) < 0)
         {
             Console.WriteLine("\n You have to type a valid Id\n");
             commandInput = Console.ReadLine();
         }
 
-        var id = Int32.Parse(commandInput);
+        var id = int.Parse(commandInput);
 
         return id;
     }

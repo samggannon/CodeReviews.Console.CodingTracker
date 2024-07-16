@@ -3,6 +3,7 @@ using Microsoft.Data.Sqlite;
 using System.Configuration;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using CodingTracker.SamGannon.UserInterface;
 
 namespace CodingTracker.SamGannon;
 
