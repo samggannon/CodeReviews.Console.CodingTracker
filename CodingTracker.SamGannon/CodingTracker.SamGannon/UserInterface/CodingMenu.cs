@@ -7,6 +7,8 @@ namespace CodingTracker.SamGannon.UserInterface;
 
 internal class CodingMenu
 {
+    UserInputHelper helper = new();
+
     internal void ShowCodingMenu()
     {
         Console.Clear();
@@ -62,14 +64,13 @@ internal class CodingMenu
 
     private void ProcessAdd()
     {
-        Validation validation = new();
-        var startTime = validation.GetStartTime();
-        var endTime = validation.GetEndTime();
-        var duration = validation.CalculateDuration(startTime, endTime);
+        var startTime = helper.GetStartTime();
+        var endTime = helper.GetEndTime();
+        var duration = helper.CalculateDuration(startTime, endTime);
 
         Coding coding = new();
 
-        coding.Date = validation.GetDateInput();
+        coding.Date = helper.GetDateInput();
         coding.Duration = duration;
 
         CodingController codingController = new();
@@ -84,8 +85,7 @@ internal class CodingMenu
 
         string commandInput = Console.ReadLine();
 
-        Validation validation = new();
-        var id = validation.ValidateIdInput(commandInput);
+        var id = helper.ValidateIdInput(commandInput);
 
         var coding = codingController.GetById(id);
 
@@ -108,8 +108,7 @@ internal class CodingMenu
         Console.WriteLine("Please add id of the record you want to update (or 0 to return to the Main Menu).");
         string commandInput = Console.ReadLine();
 
-        Validation validation = new();
-        var id = validation.ValidateIdInput(commandInput);
+        var id = helper.ValidateIdInput(commandInput);
 
         if (id == 0) ShowCodingMenu();
 
@@ -136,13 +135,13 @@ internal class CodingMenu
             switch (updateInput)
             {
                 case "d":
-                    coding.Date = validation.GetDateInput();
+                    coding.Date = helper.GetDateInput();
                     updating = false;
                     break;
                 case "t":
-                    var startTime = validation.GetStartTime();
-                    var endTime = validation.GetEndTime();
-                    coding.Duration = validation.CalculateDuration(startTime, endTime);
+                    var startTime = helper.GetStartTime();
+                    var endTime = helper.GetEndTime();
+                    coding.Duration = helper.CalculateDuration(startTime, endTime);
                     updating = false;
                     break;
                 case "0":

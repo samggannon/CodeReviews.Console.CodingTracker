@@ -85,7 +85,7 @@ internal class SleepMenu
 
         string commandInput = Console.ReadLine();
 
-        var id = validator.ValidateIdInput(commandInput);
+        var id = helper.ValidateIdInput(commandInput);
 
         GetUserInput getUserInput = new();
         if (id == 0) getUserInput.MainMenu();
@@ -109,8 +109,7 @@ internal class SleepMenu
         Console.WriteLine("Please add id of the record you want to update (or 0 to return to the Main Menu).");
         string commandInput = Console.ReadLine();
 
-        Validation validation = new();
-        var id = validation.ValidateIdInput(commandInput);
+        var id = helper.ValidateIdInput(commandInput);
 
         GetUserInput getUserInput = new();
         if (id == 0) getUserInput.MainMenu();
