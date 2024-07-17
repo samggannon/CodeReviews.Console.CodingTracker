@@ -44,13 +44,13 @@ internal class UserInputHelper
 
     public string GetDateInput()
     {
-        Console.WriteLine("Please enter the date in the following format: (dd-mm-yy).");
+        Console.WriteLine("Please enter the date in the following format: (mm-dd-yy).");
 
         string userDateInput = Console.ReadLine();
 
         while (!validator.IsValidDate(userDateInput))
         {
-            Console.WriteLine("\n\nNot a valid date. Please insert the date with the format: dd-mm-yy.\n\n");
+            Console.WriteLine("\n\nNot a valid date. Please insert the date with the format: mm-dd-yy.\n\n");
             userDateInput = Console.ReadLine();
         }
 
@@ -62,7 +62,7 @@ internal class UserInputHelper
         TimeSpan tsStartTime = TimeSpan.ParseExact(startTime, "h\\:mm", CultureInfo.InvariantCulture);
         TimeSpan tsEndTime = TimeSpan.ParseExact(endTime, "hh\\:mm", CultureInfo.InvariantCulture);
 
-        while (!validator.StartTimeIsBeforeFinishTime(tsStartTime, tsEndTime))
+        while (tsEndTime < tsStartTime)
         {
             Console.WriteLine("\nEnd time cannot occur before the start time. Please try again.\n");
 

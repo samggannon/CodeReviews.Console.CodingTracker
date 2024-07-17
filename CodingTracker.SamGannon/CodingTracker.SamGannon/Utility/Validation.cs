@@ -19,34 +19,22 @@ public class Validation
 
     public bool IsValidDate(string date)
     {
-        bool isValid = DateTime.TryParseExact(date, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _);
+        bool isValid = DateTime.TryParseExact(date, "MM-dd-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _);
         if (!isValid)
         {
             return false;
         }
 
         return isValid;
-    }
-
-    public bool StartTimeIsBeforeFinishTime(TimeSpan startTime, TimeSpan endTime)
-    {
-        bool isValid = endTime < startTime;
-        if (!isValid)
-        {
-            return false;
-        }
-
-        return isValid;
-    }
+    } 
 
     public bool IsValidId(string commandInput)
     {
-        bool isValid = int.TryParse(commandInput, out _) || string.IsNullOrEmpty(commandInput) || int.Parse(commandInput) < 0;
-        if (!isValid)
+        if (int.TryParse(commandInput, out int result))
         {
-            return false;
+            return result >= 0;
         }
 
-        return isValid;
+        return false;
     }
 }
