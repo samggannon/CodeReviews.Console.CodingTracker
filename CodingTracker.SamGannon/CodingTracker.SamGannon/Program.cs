@@ -5,6 +5,7 @@ namespace CodingTracker.SamGannon
 {
     internal class Program
     {
+        // changing something
         
         static string connectionString = ConfigurationManager.ConnectionStrings["DataConnection"].ConnectionString;
 
